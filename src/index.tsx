@@ -29,6 +29,22 @@ createServer({
           amount: 1100,
           createdAt: new Date("2021-02-15 11:00:00"),
         },
+        {
+          id: 3,
+          title: "Supermercado",
+          type: "withdraw",
+          category: "Casa",
+          amount: 2000,
+          createdAt: new Date("2021-02-18 11:00:00"),
+        },
+        {
+          id: 4,
+          title: "Salário",
+          type: "deposit",
+          category: "Job",
+          amount: 8000,
+          createdAt: new Date("2021-02-20 11:00:00"),
+        },
       ],
     });
   },
