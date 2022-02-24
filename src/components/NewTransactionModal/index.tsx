@@ -12,7 +12,8 @@ import {
   RadioBox,
   TransactionTypeContainer,
 } from "./styles";
-import { api } from "../../services/api";
+
+import { useTransaction } from "../../hooks/useTransactions";
 
 type NewTransactionModalProps = {
   isOpen: boolean;
@@ -38,6 +39,8 @@ export function NewTransactionModal({
   const [errorMessages, setErrorMessages] = useState<string[]>([]);
   const [hasError, setHasError] = useState(false);
 
+  const { createTransaction } = useTransaction();
+
   function handleRequestClose() {
     setTitle("");
     setAmount(0);
@@ -54,7 +57,7 @@ export function NewTransactionModal({
     setErrorMessages([]);
   }
 
-  function handleCreateNewTransaction(event: FormEvent) {
+  async function handleCreateNewTransaction(event: FormEvent) {
     event.preventDefault();
 
     if (!validateFields()) return;
@@ -66,11 +69,18 @@ export function NewTransactionModal({
       category,
     };
 
-    api
-      .post("transactions", data)
-      .then((response) => console.log(response.data));
+    const response = await createTransaction(data);
 
-    handleRequestClose();
+    if (!response) {
+      setHasError(true);
+
+      setErrorMessages([
+        ...errorMessages,
+        "Erro no sistema. Tente mais tarde.",
+      ]);
+    } else {
+      handleRequestClose();
+    }
   }
 
   function validateFields() {
