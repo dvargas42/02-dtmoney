@@ -20,11 +20,15 @@ export const Container = styled.div`
       padding: 1rem 2rem;
       border: 0;
       background: var(--shape);
-      border-radius: 0.25rem;
       color: var(--text-body);
 
       &:first-child {
         color: var(--text-title);
+        border-radius: 0.25rem 0 0 0.25rem;
+      }
+
+      &:last-child {
+        border-radius: 0 0.25rem 0.25rem 0;
       }
 
       &.deposit {
